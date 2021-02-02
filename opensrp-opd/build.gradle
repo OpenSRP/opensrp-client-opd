@@ -97,7 +97,6 @@ dependencies {
     api('org.smartregister:opensrp-client-core:4.1.10-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'com.github.bmelnychuk', module: 'atv'
-        exclude group: 'com.google.guava', module: 'guava'
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'net.zetetic', module: 'android-database-sqlcipher'
         exclude group: 'com.android.support', module: 'recyclerview-v7'
@@ -164,13 +163,10 @@ dependencies {
 
     implementation group: 'io.fabric.sdk.android', name: 'fabric', version: '1.4.8'
 
-    def robolectricVersion = '4.1'
-    testImplementation("org.robolectric:robolectric:$robolectricVersion") {
-        exclude group: 'com.google.auto.service', module: 'auto-service'
-        exclude group: 'com.android.support'
-    }
-    testImplementation "org.robolectric:shadows-multidex:$robolectricVersion"
-    testImplementation "org.robolectric:shadows-support-v4:3.3.2"
+    testImplementation 'org.mockito:mockito-core:3.1.0'
+    testImplementation 'org.robolectric:robolectric:4.3.1'
+    testImplementation 'org.robolectric:shadows-multidex:4.3.1'
+    testImplementation "org.json:json:20190722"
 
     testImplementation 'com.ibm.fhir:fhir-model:4.2.3'
 
@@ -189,6 +185,10 @@ dependencies {
     testImplementation 'com.ibm.fhir:fhir-model:4.2.3'
     testImplementation 'org.skyscreamer:jsonassert:1.5.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+
+    def fragment_version = "1.2.5"
+
+    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
 }
 
 task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
