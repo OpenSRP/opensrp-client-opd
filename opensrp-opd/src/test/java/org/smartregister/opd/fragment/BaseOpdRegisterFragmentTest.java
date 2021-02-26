@@ -98,17 +98,17 @@ public class BaseOpdRegisterFragmentTest extends BaseUnitTest {
 
         @Override
         protected void startRegistration() {
-
+            //Do nothing
         }
 
         @Override
         protected void performPatientAction(@NonNull CommonPersonObjectClient commonPersonObjectClient) {
-
+            //Do nothing
         }
 
         @Override
         protected void goToClientDetailActivity(@NonNull CommonPersonObjectClient commonPersonObjectClient) {
-
+            //Do nothing
         }
 
         @Override

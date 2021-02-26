@@ -120,16 +120,17 @@ public class BaseOpdRegisterActivityTest extends BaseActivityUnitTest {
             return new BaseRegisterFragment() {
                 @Override
                 protected void initializePresenter() {
+                    //Do nothing
                 }
 
                 @Override
                 public void setUniqueID(String qrCode) {
-
+                    //Do nothing
                 }
 
                 @Override
                 public void setAdvancedSearchFormData(HashMap<String, String> advancedSearchFormData) {
-
+                    //Do nothing
                 }
 
                 @Override
@@ -144,34 +145,34 @@ public class BaseOpdRegisterActivityTest extends BaseActivityUnitTest {
 
                 @Override
                 protected void startRegistration() {
-
+                    //Do nothing
                 }
 
                 @Override
                 protected void onViewClicked(View view) {
-
+                    //Do nothing
                 }
 
                 @Override
                 public void showNotFoundPopup(String opensrpId) {
-
+                    //Do nothing
                 }
             };
         }
 
         @Override
         public void startFormActivity(String formName, String entityId, Map<String, String> metaData) {
-
+            //Do nothing
         }
 
         @Override
         public void startFormActivity(JSONObject form) {
-
+            //Do nothing
         }
 
         @Override
         protected void onActivityResultExtended(int requestCode, int resultCode, Intent data) {
-
+            //Do nothing
         }
     }
 }
