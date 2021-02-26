@@ -15,7 +15,7 @@ import java.util.List;
 
 public class OpdDiagnosisDetailRepository extends BaseRepository implements OpdDiagnosisDetailDao {
 
-    private static final String CREATE_TABLE_SQL = "CREATE TABLE " + OpdDbConstants.Table.OPD_DIAGNOSIS_DETAIL + "("
+    protected static final String CREATE_TABLE_SQL = "CREATE TABLE " + OpdDbConstants.Table.OPD_DIAGNOSIS_DETAIL + "("
             + OpdDbConstants.Column.OpdDiagnosisDetail.BASE_ENTITY_ID + " VARCHAR NOT NULL, "
             + OpdDbConstants.Column.OpdDiagnosisDetail.DIAGNOSIS + " VARCHAR NOT NULL, "
             + OpdDbConstants.Column.OpdDiagnosisDetail.TYPE + " VARCHAR NOT NULL, "
@@ -27,11 +27,11 @@ public class OpdDiagnosisDetailRepository extends BaseRepository implements OpdD
             + OpdDbConstants.Column.OpdDiagnosisDetail.CREATED_AT + " VARCHAR NULL, "
             + OpdDbConstants.Column.OpdDiagnosisDetail.VISIT_ID + " VARCHAR NOT NULL )";
 
-    private static final String INDEX_BASE_ENTITY_ID = "CREATE INDEX " + OpdDbConstants.Table.OPD_DIAGNOSIS_DETAIL
+    protected static final String INDEX_BASE_ENTITY_ID = "CREATE INDEX " + OpdDbConstants.Table.OPD_DIAGNOSIS_DETAIL
             + "_" + OpdDbConstants.Column.OpdDiagnosisDetail.BASE_ENTITY_ID + "_index ON " + OpdDbConstants.Table.OPD_DIAGNOSIS_DETAIL +
             "(" + OpdDbConstants.Column.OpdDiagnosisDetail.BASE_ENTITY_ID + " COLLATE NOCASE);";
 
-    private static final String INDEX_VISIT_ID = "CREATE INDEX " + OpdDbConstants.Table.OPD_DIAGNOSIS_DETAIL
+    protected static final String INDEX_VISIT_ID = "CREATE INDEX " + OpdDbConstants.Table.OPD_DIAGNOSIS_DETAIL
             + "_" + OpdDbConstants.Column.OpdDiagnosisDetail.VISIT_ID + "_index ON " + OpdDbConstants.Table.OPD_DIAGNOSIS_DETAIL +
             "(" + OpdDbConstants.Column.OpdDiagnosisDetail.VISIT_ID + " COLLATE NOCASE);";
 
