@@ -26,6 +26,7 @@ import org.smartregister.opd.model.OpdRegisterFragmentModel;
 import org.smartregister.opd.presenter.OpdRegisterFragmentPresenter;
 import org.smartregister.opd.provider.OpdRegisterProvider;
 import org.smartregister.opd.utils.ConfigurationInstancesHelper;
+import org.smartregister.opd.utils.OpdConstants;
 import org.smartregister.opd.utils.OpdUtils;
 import org.smartregister.opd.utils.OpdViewConstants;
 import org.smartregister.receiver.SyncStatusBroadcastReceiver;
@@ -308,6 +309,9 @@ public abstract class BaseOpdRegisterFragment extends BaseRegisterFragment imple
     }
 
     protected int getToolBarTitle() {
+        if (OpdLibrary.getInstance().getProperties().hasProperty(OpdConstants.PROPERTY.USE_NEW_OPD_MODULE)) {
+            return R.string.new_opd_register_title_name;
+        }
         return R.string.opd_register_title_name;
     }
 
@@ -390,6 +394,10 @@ public abstract class BaseOpdRegisterFragment extends BaseRegisterFragment imple
     @NonNull
     @Override
     public String getDueOnlyText() {
+
+        if (OpdLibrary.getInstance().getProperties().hasProperty(OpdConstants.PROPERTY.USE_NEW_OPD_MODULE)) {
+            return getString(R.string.seen);
+        }
         return getString(R.string.due_only);
     }
 }

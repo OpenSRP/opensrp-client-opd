@@ -313,4 +313,8 @@ public class OpdConstants extends AllConstants {
         public static final String OPD_CLOSE = "OPD Close";
         public static final String DEATH = "Death";
     }
+
+    public static class PROPERTY {
+        public static final String USE_NEW_OPD_MODULE = "use.new.opd.module";
+    }
 }
