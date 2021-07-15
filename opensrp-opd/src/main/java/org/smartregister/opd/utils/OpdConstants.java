@@ -313,4 +313,83 @@ public class OpdConstants extends AllConstants {
         public static final String OPD_CLOSE = "OPD Close";
         public static final String DEATH = "Death";
     }
+
+
+    //New OPD Module WorkFlow
+    public interface DateTimeFormat {
+        String HH_MM_AMPM = "h:mm a";
+        String YYYY_MM_dd_HH_mm_ss = "yyyy-MM-dd HH:mm:ss";
+        String dd_MMM_yyyy = "dd MMM yyyy";
+        String hh_mm_ss = "hh:mm:ss";
+        String hh_mm = "hh:mm";
+        String dd_MM_yyyy = "dd/MM/yyyy";
+        String ddMMyyyy = "ddMMyyyy";
+        String yyyy_MM_dd = "yyyy-MM-dd";
+    }
+
+
+    public static class OpdModuleEvents {
+        public static final String OPD_REGISTRATION = "OPD_Registration";
+        public static final String OPD_CHECK_IN = "OPD_Check_in";
+        public static final String OPD_VITAL_DANGER_SIGNS_CHECK = "OPD_Vital_Danger_signs_check";
+        public static final String OPD_DIAGNOSIS = "OPD_Diagnosis";
+        public static final String OPD_LABORATORY = "OPD_Laboratory";
+        public static final String OPD_TREATMENT = "OPD_Treatment";
+        public static final String OPD_PHARMACY = "OPD_Pharmacy";
+        public static final String OPD_FINAL_OUTCOME = "OPD_Final_Outcome";
+        public static final String OPD_SERVICE_CHARGE= "OPD_Service_Charge";
+        public static final String OPD_VISIT_GROUP = "opd_visit_group";
+
+    }
+
+
+    public static final String METADATA = "metadata";
+
+    public static final String DETAILS = "details";
+    public static final String RELATIONSHIPS = "relationships";
+
+
+    public interface Properties {
+        String TASK_IDENTIFIER = "taskIdentifier";
+        String TASK_BUSINESS_STATUS = "taskBusinessStatus";
+        String TASK_STATUS = "taskStatus";
+        String TASK_CODE = "taskCode";
+        String LOCATION_UUID = "locationUUID";
+        String LOCATION_VERSION = "locationVersion";
+        String LOCATION_TYPE = "locationType";
+        String LOCATION_PARENT = "locationParent";
+        String LOCATION_ID = "location_id";
+        String FEATURE_SELECT_TASK_BUSINESS_STATUS = "featureSelectTaskBusinessStatus";
+        String BASE_ENTITY_ID = "baseEntityId";
+        String FORM_SUBMISSION_ID = "formSubmissionId";
+        String STRUCTURE_NAME = "structure_name";
+        String APP_VERSION_NAME = "appVersionName";
+        String FORM_VERSION = "form_version";
+        String TASK_CODE_LIST = "task_code_list";
+        String FAMILY_MEMBER_NAMES = "family_member_names";
+        String PLAN_IDENTIFIER = "planIdentifier";
+        String LOCATION_STATUS = "status";
+        String LOCATION_NAME = "name";
+    }
+
+    public interface JsonForm {
+        // TODO
+        String OPD_CHECKIN = "json.form/opd_checkin.json";
+        String VITAL_DANGER_SIGNS = "json.form/opd_danger_signs.json";
+        String DIAGNOSIS = "json.form/opd_diagnosis.json";
+        String LAB_RESULTS = "json.form/opd_laboratory.json";
+        String TREATMENT = "json.form/opd_treatment.json";
+        String PHARMACY = "json.form/opd_pharmacy.json";
+        String FINAL_OUTCOME = "json.form/opd_outcome.json";
+        String SERVICE_FEE = "json.form/opd_service_fee.json";
+    }
+
+    public static class TABLE_NAME {
+        public static final String ALL_CLIENTS = "ec_client";
+    }
+
+
+    public static class PROPERTY {
+        public static final String USE_NEW_OPD_MODULE = "use.new.opd.module";
+    }
 }

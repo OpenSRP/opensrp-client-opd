@@ -22,6 +22,8 @@ import org.smartregister.opd.R;
 import org.smartregister.opd.adapter.ViewPagerAdapter;
 import org.smartregister.opd.configuration.OpdRegisterSwitcher;
 import org.smartregister.opd.contract.OpdProfileActivityContract;
+import org.smartregister.opd.fragment.NewOpdProfileOverviewFragment;
+import org.smartregister.opd.fragment.NewOpdProfileVisitsFragment;
 import org.smartregister.opd.fragment.OpdProfileOverviewFragment;
 import org.smartregister.opd.fragment.OpdProfileVisitsFragment;
 import org.smartregister.opd.listener.OnSendActionToFragment;
@@ -75,23 +77,6 @@ public class BaseOpdProfileActivity extends BaseProfileActivity implements OpdPr
         setTitle("");
     }
 
-    @Override
-    protected ViewPager setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        OpdProfileOverviewFragment profileOverviewFragment = OpdProfileOverviewFragment.newInstance(this.getIntent().getExtras());
-        setSendActionListenerForProfileOverview(profileOverviewFragment);
-
-        OpdProfileVisitsFragment profileVisitsFragment = OpdProfileVisitsFragment.newInstance(this.getIntent().getExtras());
-        setSendActionListenerToVisitsFragment(profileVisitsFragment);
-
-        adapter.addFragment(profileOverviewFragment, this.getString(R.string.overview));
-        adapter.addFragment(profileVisitsFragment, this.getString(R.string.visits));
-
-        viewPager.setAdapter(adapter);
-        return viewPager;
-    }
-
     public void setSendActionListenerForProfileOverview(OnSendActionToFragment sendActionListenerForProfileOverview) {
         this.sendActionListenerForProfileOverview = sendActionListenerForProfileOverview;
     }
@@ -136,6 +121,22 @@ public class BaseOpdProfileActivity extends BaseProfileActivity implements OpdPr
             closeMenu.setEnabled(true);
         }
         return true;
+    }
+
+    private ViewPager setupLegacyViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+        OpdProfileOverviewFragment profileOverviewFragment = OpdProfileOverviewFragment.newInstance(this.getIntent().getExtras());
+        setSendActionListenerForProfileOverview(profileOverviewFragment);
+
+        OpdProfileVisitsFragment profileVisitsFragment = OpdProfileVisitsFragment.newInstance(this.getIntent().getExtras());
+        setSendActionListenerToVisitsFragment(profileVisitsFragment);
+
+        adapter.addFragment(profileOverviewFragment, this.getString(R.string.overview));
+        adapter.addFragment(profileVisitsFragment, this.getString(R.string.visits));
+
+        viewPager.setAdapter(adapter);
+        return viewPager;
     }
 
     @Override
@@ -325,4 +326,31 @@ public class BaseOpdProfileActivity extends BaseProfileActivity implements OpdPr
     public void setRegisterType(String registerType) {
         this.registerType = registerType;
     }
+
+    public ViewPager setupNewOpdModuleViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+        NewOpdProfileOverviewFragment profileOverviewFragment = NewOpdProfileOverviewFragment.newInstance(this.getIntent().getExtras());
+        setSendActionListenerForProfileOverview(profileOverviewFragment);
+
+        NewOpdProfileVisitsFragment profileVisitsFragment = NewOpdProfileVisitsFragment.newInstance(this.getIntent().getExtras());
+        setSendActionListenerToVisitsFragment(profileVisitsFragment);
+
+        adapter.addFragment(profileOverviewFragment, this.getString(R.string.today));
+        adapter.addFragment(profileVisitsFragment, this.getString(R.string.history));
+
+        viewPager.setAdapter(adapter);
+        return viewPager;
+    }
+
+
+    @Override
+    protected ViewPager setupViewPager(ViewPager viewPager) {
+        if (OpdLibrary.getInstance().getProperties().hasProperty(OpdConstants.PROPERTY.USE_NEW_OPD_MODULE)) {
+            return setupNewOpdModuleViewPager(viewPager);
+        }
+        return setupLegacyViewPager(viewPager);
+    }
+
+
 }

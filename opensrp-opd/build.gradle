@@ -94,7 +94,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     implementation 'androidx.multidex:multidex:2.0.0'
 
-    api('org.smartregister:opensrp-client-core:4.1.10-SNAPSHOT@aar') {
+    api('org.smartregister:opensrp-client-core:4.3.12-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'com.github.bmelnychuk', module: 'atv'
         exclude group: 'com.google.guava', module: 'guava'
@@ -144,7 +144,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
     implementation 'com.evernote:android-job:1.2.6'
     implementation 'com.github.lecho:hellocharts-android:v1.5.8'
-    implementation 'id.zelory:compressor:2.1.0'
+    implementation 'id.zelory:compressor:2.1.1'
     implementation('com.google.android.material:material:1.0.0') {
         exclude group: 'com.android.support', module: 'recyclerview-v7'
         exclude group: 'com.android.support', module: 'cardview-v7'
