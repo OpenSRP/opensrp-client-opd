@@ -77,6 +77,8 @@ android {
         exclude 'META-INF/LICENSE.md'
         exclude 'META-INF/NOTICE.md'
         exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/INDEX'
+        exclude 'META-INF/INDEX.LIST'
     }
 }
 
@@ -94,7 +96,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     implementation 'androidx.multidex:multidex:2.0.0'
 
-    api('org.smartregister:opensrp-client-core:4.1.10-SNAPSHOT@aar') {
+    api('org.smartregister:opensrp-client-core:4.3.12-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'com.github.bmelnychuk', module: 'atv'
         exclude group: 'com.google.guava', module: 'guava'
@@ -143,8 +145,8 @@ dependencies {
     // explicitly depend on RxJava's latest version for bug fixes and new features.
     implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
     implementation 'com.evernote:android-job:1.2.6'
-    implementation 'com.github.lecho:hellocharts-android:v1.5.8'
-    implementation 'id.zelory:compressor:2.1.0'
+    implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
+    implementation 'id.zelory:compressor:2.1.1'
     implementation('com.google.android.material:material:1.0.0') {
         exclude group: 'com.android.support', module: 'recyclerview-v7'
         exclude group: 'com.android.support', module: 'cardview-v7'
@@ -172,7 +174,7 @@ dependencies {
     testImplementation "org.robolectric:shadows-multidex:$robolectricVersion"
     testImplementation "org.robolectric:shadows-support-v4:3.3.2"
 
-    testImplementation 'com.ibm.fhir:fhir-model:4.2.3'
+    testImplementation 'com.ibm.fhir:fhir-model:4.7.0'
 
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.+') {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -186,7 +188,7 @@ dependencies {
     testImplementation "org.powermock:powermock-api-mockito2:$powerMockVersion"
     testImplementation "org.powermock:powermock-classloading-xstream:$powerMockVersion"
 
-    testImplementation 'com.ibm.fhir:fhir-model:4.2.3'
+    testImplementation 'com.ibm.fhir:fhir-model:4.7.0'
     testImplementation 'org.skyscreamer:jsonassert:1.5.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
 }

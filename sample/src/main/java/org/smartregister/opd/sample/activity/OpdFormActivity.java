@@ -1,8 +1,7 @@
 package org.smartregister.opd.sample.activity;
 
 
-import com.vijay.jsonwizard.constants.JsonFormConstants;
-
+import org.smartregister.client.utils.constants.JsonFormConstants;
 import org.smartregister.opd.activity.BaseOpdFormActivity;
 import org.smartregister.opd.sample.fragment.OpdFormFragment;
 

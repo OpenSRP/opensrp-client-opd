@@ -49,6 +49,7 @@ import org.smartregister.opd.repository.OpdTreatmentDetailRepository;
 import org.smartregister.opd.repository.OpdVisitRepository;
 import org.smartregister.opd.utils.OpdConstants;
 import org.smartregister.opd.utils.OpdDbConstants;
+import org.smartregister.opd.utils.VisitUtils;
 import org.smartregister.repository.EventClientRepository;
 import org.smartregister.repository.Repository;
 
@@ -376,7 +377,7 @@ public class OpdMiniClientProcessorForJavaTest extends BaseRobolectricUnitTest {
         Mockito.when(opdLibrary.context()).thenReturn(opensrpContext);
         Mockito.when(opdLibrary.getOpdConfiguration()).thenReturn(opdConfiguration);
         ReflectionHelpers.setStaticField(OpdLibrary.class, "instance", opdLibrary);
-        Whitebox.invokeMethod(opdMiniClientProcessorForJava, "updateLastInteractedWith", event, visitId);
+        VisitUtils.updateLastInteractedWith(event, visitId);
         Mockito.verify(sqLiteDatabase, Mockito.times(1)).update(Mockito.eq(opdMetadata.getTableName()),
                 Mockito.any(ContentValues.class),
                 Mockito.eq("base_entity_id = ?"),
@@ -414,7 +415,7 @@ public class OpdMiniClientProcessorForJavaTest extends BaseRobolectricUnitTest {
                 Mockito.any(ContentValues.class)
                 , Mockito.eq("base_entity_id = ?"), Mockito.eq(new String[]{event.getBaseEntityId()}))).thenReturn(1);
 
-        Whitebox.invokeMethod(opdMiniClientProcessorForJava, "updateLastInteractedWith", event, visitId);
+        VisitUtils.updateLastInteractedWith(event, visitId);
         Mockito.verify(sqLiteDatabase, Mockito.times(1)).update(Mockito.eq(opdMetadata.getTableName()),
                 Mockito.any(ContentValues.class),
                 Mockito.eq("base_entity_id = ?"),

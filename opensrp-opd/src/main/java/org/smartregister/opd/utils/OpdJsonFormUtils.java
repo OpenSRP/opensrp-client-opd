@@ -30,6 +30,7 @@ import org.smartregister.repository.ImageRepository;
 import org.smartregister.repository.UniqueIdRepository;
 import org.smartregister.util.AssetHandler;
 import org.smartregister.util.JsonFormUtils;
+import org.smartregister.util.StringUtil;
 import org.smartregister.view.activity.DrishtiApplication;
 
 import java.io.File;
@@ -39,6 +40,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -479,5 +481,71 @@ public class OpdJsonFormUtils extends JsonFormUtils {
             Timber.e(e);
             return null;
         }
+    }
+
+    public static String getLabResultsStringFromMap(HashMap<String, String> savedValues) {
+        try {
+            String testResults = "";
+            String strRepeatingGroupMap = savedValues.get(OpdConstants.REPEATING_GROUP_MAP);
+            if (StringUtils.isNotBlank(strRepeatingGroupMap)) {
+                JSONObject jsonObject = new JSONObject(strRepeatingGroupMap);
+                Iterator<String> repeatingGroupKeys = jsonObject.keys();
+                while (repeatingGroupKeys.hasNext()) {
+                    JSONObject jsonTestObject = jsonObject.optJSONObject(repeatingGroupKeys.next());
+                    Iterator<String> testStringIterator = jsonTestObject.keys();
+                    String testName = "";
+                    String testResult = "";
+                    while (testStringIterator.hasNext()) {
+                        String resultKey = testStringIterator.next();
+                        if (OpdConstants.DIAGNOSTIC_TEST.equals(resultKey)) {
+                            testName = StringUtil.humanize(OpdUtils.removeHyphen(jsonTestObject.optString(resultKey)));
+                        }
+                        if (resultKey.startsWith(OpdConstants.DIAGNOSTIC_TEST_RESULT)) {
+                            String value = StringUtil.humanize(OpdUtils.createTestName(resultKey))+" result: "+jsonTestObject.optString(resultKey);
+                            if (!value.isEmpty()) {
+                                if (testResult.isEmpty()) {
+                                    testResult = "{ ";
+                                }
+                                testResult = testResult.concat(value);
+                            }
+                        }
+                        if (testStringIterator.hasNext()) {
+                            testResult = testResult.concat(", ");
+                        } else {
+                            testResult = testResult.concat("}");
+                        }
+                    }
+                    if (repeatingGroupKeys.hasNext()) {
+                        testResult = testResult.concat(", ");
+                    }
+                    testResults = testResults.concat(testName + ": "+testResult);
+                }
+            }
+            return testResults;
+        } catch (Exception e) {
+            Timber.e(e, "OpdJsonFormUtils -> getLabResultsStringFromMap()");
+            return "";
+        }
+    }
+
+    public static String getMedicineNoteString(String value) {
+        String medicineString = "";
+        try {
+            if (value != null && value.startsWith("[")) {
+                JSONArray medicines = new JSONArray(value);
+                for (int i = 0; i < medicines.length(); i++) {
+                    JSONObject medicine = medicines.getJSONObject(i);
+                    if (i != 0)
+                        medicineString = medicineString.concat(", ");
+                    medicineString = medicineString.concat(medicine.getString("text"));
+                }
+            } else {
+                JSONObject medicine = new JSONObject(value);
+                medicineString = medicineString.concat(medicine.getString("text"));
+            }
+        } catch (Exception e) {
+            Timber.e(e, "getMedicineNoteString()");
+        }
+        return medicineString;
     }
 }

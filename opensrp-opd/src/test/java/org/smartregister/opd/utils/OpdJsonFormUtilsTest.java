@@ -519,4 +519,27 @@ public class OpdJsonFormUtilsTest {
         Assert.assertEquals("/home/opensrp/2323-wxdfd9-34.JPEG", profileImage.getFilepath());
         Assert.assertEquals(ImageRepository.TYPE_Unsynced, profileImage.getSyncStatus());
     }
+
+    @Test
+    public void testMedicineNoteString() throws Exception {
+        String medicineValues = "[{\"key\":\"AA007840\",\"text\":\"Atenolol 50mg\",\"openmrs_entity\":\"\",\"openmrs_entity_id\":\"\",\"openmrs_entity_parent\":\"\",\"property\":{\"pack_size\":null,\"product_code\":\"AA007840\",\"dispensing_unit\":\"Tablet\",\"meta\":{\"duration\":\"78\",\"dosage\":\"12\",\"frequency\":\"3456\",\"info\":\"Dose: 12, Duration: 78, Frequency: 3456\"}}},{\"key\":\"FF006300\",\"text\":\"Bandage, WOW 10cm x 4m long, when stretched\",\"openmrs_entity\":\"\",\"openmrs_entity_id\":\"\",\"openmrs_entity_parent\":\"\",\"property\":{\"pack_size\":null,\"product_code\":\"FF006300\",\"dispensing_unit\":\"each\",\"meta\":{\"duration\":\"33\",\"dosage\":\"11\",\"frequency\":\"2244\",\"info\":\"Dose: 11, Duration: 33, Frequency: 2244\"}}}]\n";
+        String result = OpdJsonFormUtils.getMedicineNoteString(medicineValues);
+        String output = "Atenolol 50mg, Bandage, WOW 10cm x 4m long, when stretched";
+        Assert.assertEquals(result, output);
+    }
+
+    @Test
+    public void testGetLabResultsStringFromMap() throws Exception {
+        HashMap<String, String> savedValues = new HashMap<>();
+        savedValues.put("tests_repeating_group_count","3");
+        savedValues.put("diagnostic_test_ba1ed23029a44fd980784093a5c6f746","ultra_sound");
+        savedValues.put("diagnostic_test_24f8d3b0a73a49e9894c83d6d545b39f","pregnancy_test");
+        savedValues.put("repeatingGroupMap","{\"24f8d3b0a73a49e9894c83d6d545b39f\":{\"diagnostic_test_result\":\"Negative\",\"diagnostic_test\":\"pregnancy_test\"},\"ba1ed23029a44fd980784093a5c6f746\":{\"diagnostic_test\":\"ultra_sound\",\"diagnostic_test_result_specify\":\"Ultra\"}}");
+        savedValues.put("treatment_type","Medicine, Suturing, Wound dressing, Foreign body removal");
+        savedValues.put("diagnostic_test_result_specify_ba1ed23029a44fd980784093a5c6f746","Ultra");
+        savedValues.put("diagnostic_test_result_24f8d3b0a73a49e9894c83d6d545b39f","Negative");
+        String result = OpdJsonFormUtils.getLabResultsStringFromMap(savedValues);
+        String output = "Pregnancy test: { Status result: Negative, }, Ultra sound: , Specify result: Ultra}";
+        Assert.assertEquals(result, output);
+    }
 }

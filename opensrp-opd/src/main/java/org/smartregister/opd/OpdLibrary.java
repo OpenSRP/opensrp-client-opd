@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.Context;
+import org.smartregister.CoreLibrary;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.domain.tag.FormTag;
 import org.smartregister.opd.configuration.OpdConfiguration;
@@ -28,6 +29,8 @@ import org.smartregister.opd.repository.OpdTestConductedRepository;
 import org.smartregister.opd.repository.OpdTreatmentDetailRepository;
 import org.smartregister.opd.repository.OpdVisitRepository;
 import org.smartregister.opd.repository.OpdVisitSummaryRepository;
+import org.smartregister.opd.repository.VisitDetailsRepository;
+import org.smartregister.opd.repository.VisitRepository;
 import org.smartregister.opd.utils.FilePath;
 import org.smartregister.opd.utils.OpdConstants;
 import org.smartregister.opd.utils.OpdDbConstants;
@@ -39,7 +42,9 @@ import org.smartregister.repository.Repository;
 import org.smartregister.repository.UniqueIdRepository;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
+import org.smartregister.util.AppProperties;
 import org.smartregister.util.JsonFormUtils;
+import org.smartregister.util.NativeFormProcessor;
 import org.smartregister.view.activity.DrishtiApplication;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
@@ -83,6 +88,10 @@ public class OpdLibrary {
     private int applicationVersion;
     private int databaseVersion;
 
+    private VisitRepository opdVisitRepository;
+    private VisitDetailsRepository visitDetailsRepository;
+    private NativeFormProcessorFactory formProcessorFactory;
+
     private Yaml yaml;
 
     private OpdRulesEngineHelper opdRulesEngineHelper;
@@ -104,6 +113,14 @@ public class OpdLibrary {
         if (instance == null) {
             instance = new OpdLibrary(context, opdConfiguration, repository, applicationVersion, databaseVersion);
         }
+    }
+
+    public static void initializeFormFactory(NativeFormProcessorFactory nativeFormProcessorFactory){
+        instance.formProcessorFactory = nativeFormProcessorFactory;
+    }
+
+    public NativeFormProcessorFactory getFormProcessorFactory(){
+        return instance.formProcessorFactory;
     }
 
     public static OpdLibrary getInstance() {
@@ -260,6 +277,13 @@ public class OpdLibrary {
     }
 
     @NonNull
+    public Iterable<Object> readYaml(@NonNull String filename, Yaml yaml) throws IOException {
+        InputStreamReader inputStreamReader = new InputStreamReader(
+                context.applicationContext().getAssets().open((FilePath.FOLDER.CONFIG_FOLDER_PATH + filename)));
+        return yaml.loadAll(inputStreamReader);
+    }
+
+    @NonNull
     public OpdRulesEngineHelper getOpdRulesEngineHelper() {
         if (opdRulesEngineHelper == null) {
             opdRulesEngineHelper = new OpdRulesEngineHelper();
@@ -376,5 +400,30 @@ public class OpdLibrary {
 
     public boolean isClientCurrentlyCheckedIn(@Nullable OpdVisit opdVisit, @Nullable OpdDetails opdDetails) {
         return !canPatientCheckInInsteadOfDiagnoseAndTreat(opdVisit, opdDetails);
+    }
+
+    public AppProperties getProperties() {
+        return CoreLibrary.getInstance().context().getAppProperties();
+    }
+
+    public VisitRepository visitRepository() {
+        if (opdVisitRepository == null) {
+            opdVisitRepository = new VisitRepository();
+        }
+        return opdVisitRepository;
+    }
+
+    public VisitDetailsRepository visitDetailsRepository() {
+        if (visitDetailsRepository == null) {
+            visitDetailsRepository = new VisitDetailsRepository();
+        }
+        return visitDetailsRepository;
+    }
+
+
+    public interface NativeFormProcessorFactory {
+        NativeFormProcessor createInstance(String jsonString) throws JSONException ;
+        NativeFormProcessor createInstance(JSONObject jsonObject);
+        NativeFormProcessor createInstanceFromAsset(String filePath) throws JSONException ;
     }
 }

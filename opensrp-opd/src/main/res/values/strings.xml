@@ -87,4 +87,24 @@
 
     <string name="opd_close">OPD Close</string>
 
+
+    <!--Opd New Module -->
+    <string name="new_opd_register_title_name">All Clients (OPD)</string>
+    <string name="opd_check_in">CHECK IN</string>
+    <string name="vital_danger_signs">VITAL/DANGER SIGNS</string>
+    <string name="opd_diagnosis">DIAGNOSIS</string>
+    <string name="lab_reports">LABORATORY TESTS AND RESULTS</string>
+    <string name="opd_treatment">TREATMENT</string>
+    <string name="pharmacy">PHARMACY</string>
+    <string name="final_outcome">FINAL OUTCOME</string>
+    <string name="service_fee">SERVICE FEE</string>
+    <string name="today">Today</string>
+    <string name="history">History</string>
+    <string name="seen">Seen</string>
+    <string name="seen_today">Seen Today</string>
+    <string name="edit">EDIT</string>
+    <string name="view">VIEW</string>
+
+
+
 </resources>
